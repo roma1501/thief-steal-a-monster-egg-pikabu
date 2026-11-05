@@ -1,0 +1,7 @@
+"Guitar" by AntumDeluge
+Asset page: https://opengameart.org/content/guitar-0
+License: CC0 1.0 Universal (public domain dedication) - https://creativecommons.org/publicdomain/zero/1.0/
+The license was read on the asset page itself (opengameart.org) on 2026-10-23. Attribution is not required.
+
+Downloaded: guitar-1.wav (single strummed chord)
+Used in: assets/sounds/guitar-bonk-1.ogg, assets/sounds/guitar-bonk-2.ogg, assets/sounds/power-chord.ogg

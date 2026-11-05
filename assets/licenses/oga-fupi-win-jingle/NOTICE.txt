@@ -1,0 +1,7 @@
+"Win Jingle" by Fupi
+Asset page: https://opengameart.org/content/win-jingle
+License: CC0 1.0 Universal (public domain dedication) - https://creativecommons.org/publicdomain/zero/1.0/
+The license was read on the asset page itself (opengameart.org) on 2026-10-23. Attribution is not required.
+
+Downloaded: winjingle.zip (variations of one jingle in different instruments)
+Used in: assets/sounds/golden-fanfare.ogg

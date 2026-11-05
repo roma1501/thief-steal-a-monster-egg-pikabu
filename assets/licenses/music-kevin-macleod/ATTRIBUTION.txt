@@ -1,0 +1,22 @@
+Music by Kevin MacLeod (incompetech.com) - Creative Commons Attribution 4.0 International (CC BY 4.0)
+https://creativecommons.org/licenses/by/4.0/
+
+License verified on the author's site (https://incompetech.com/music/royalty-free/faq.html, 2026-10-23): free to use with credit; cutting, splicing and compressing
+need no extra mention, the credit must be easy to find.
+
+REQUIRED CREDIT (show it in the game, e.g. in Settings -> Credits):
+
+"Sneaky Snitch" Kevin MacLeod (incompetech.com)
+Licensed under Creative Commons: By Attribution 4.0 License
+http://creativecommons.org/licenses/by/4.0/
+
+"Carefree" Kevin MacLeod (incompetech.com)
+Licensed under Creative Commons: By Attribution 4.0 License
+http://creativecommons.org/licenses/by/4.0/
+
+"Jaunty Gumption" Kevin MacLeod (incompetech.com)
+Licensed under Creative Commons: By Attribution 4.0 License
+http://creativecommons.org/licenses/by/4.0/
+
+Changes made to the originals: a section of each track was cut out and joined into a seamless loop (cross-fade), loudness normalized, re-encoded to Ogg Vorbis.
+Files: assets/sounds/music-monster-main.ogg ("Sneaky Snitch"), music-monster-menu.ogg ("Carefree"), music-monster-golden.ogg ("Jaunty Gumption").

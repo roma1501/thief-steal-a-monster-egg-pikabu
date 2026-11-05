@@ -1,0 +1,7 @@
+"Coin Splash" by LordTomorrow
+Asset page: https://opengameart.org/content/coin-splash
+License: CC0 1.0 Universal (public domain dedication) - https://creativecommons.org/publicdomain/zero/1.0/
+The license was read on the asset page itself (opengameart.org) on 2026-10-23. Attribution is not required.
+
+Downloaded: coinsplash.ogg
+Used in: assets/sounds/deliver-2.ogg, assets/sounds/collect-coins.ogg

@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <title>Вор яиц монстров</title>
+    <link rel="icon" type="image/png" href="assets/branding/monster-icon.png">
+    <style>
+        html, body {
+            margin: 0;
+            padding: 0;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            background: #1b1250;
+            -webkit-touch-callout: none;
+            -webkit-user-select: none;
+            user-select: none;
+        }
+        input, textarea, [contenteditable] { -webkit-user-select: text; user-select: text; }
+        img { -webkit-user-drag: none; }
+        #world3d {
+            position: fixed;
+            inset: 0;
+            width: 100%;
+            height: 100%;
+            display: block;
+            outline: none;
+            touch-action: none;
+        }
+        @font-face { font-family: 'Nunito'; src: url('assets/fonts/nunito.ttf?v=0.1.1-76ec0fbf') format('truetype'); font-weight: 200 1000; font-style: normal; font-display: swap; }
+        /* Экран загрузки: глубокий фиолетовый фон, логотип, подпрыгивающий Моксло, полоса в рамке из progress-bar */
+        #loading-screen {
+            position: fixed;
+            inset: 0;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            gap: 1.6vh;
+            background: radial-gradient(ellipse at 50% 36%, #5a30e0 0%, #2a1a6e 48%, #140a45 100%);
+            z-index: 1000;
+            font-family: Nunito, 'Arial Black', system-ui, sans-serif;
+            font-weight: 800;
+            overflow: hidden;
+        }
+        #loading-screen::before { content: ''; position: absolute; inset: 0; pointer-events: none; opacity: .5;
+            background-image: radial-gradient(circle at 50% 50%, rgba(255,255,255,.14) 0 5px, rgba(255,255,255,0) 6px), radial-gradient(circle at 50% 50%, rgba(255,255,255,.08) 0 3px, rgba(255,255,255,0) 4px);
+            background-size: 46px 46px, 46px 46px; background-position: 0 0, 23px 23px; }
+        #loading-screen::after { content: ''; position: absolute; left: 50%; top: 40%; width: 150vmax; height: 150vmax; margin: -75vmax 0 0 -75vmax; pointer-events: none;
+            background: repeating-conic-gradient(from 0deg, rgba(255,210,90,.10) 0deg 8deg, rgba(255,210,90,0) 8deg 20deg);
+            -webkit-mask: radial-gradient(circle, #000 0, transparent 40%); mask: radial-gradient(circle, #000 0, transparent 40%); animation: ldSpin 40s linear infinite; }
+        @keyframes ldSpin { to { transform: rotate(360deg); } }
+        .ld-logo { position: relative; z-index: 1; width: min(74vw, 440px, 42vh * 1.437); height: auto; filter: drop-shadow(0 6px 0 rgba(0,0,0,.35)) drop-shadow(0 0 18px rgba(130,70,255,.6)); animation: ldLogo 2.6s ease-in-out infinite alternate; }
+        @keyframes ldLogo { from { transform: translateY(-4px) rotate(-1deg); } to { transform: translateY(4px) rotate(1deg); } }
+        .ld-hero { position: relative; z-index: 1; margin-top: 1.2vh; height: clamp(86px, 21vh, 190px); aspect-ratio: 1 / 1.1; display: flex; align-items: flex-end; justify-content: center; }
+        .ld-hero img { height: 100%; width: auto; transform-origin: 50% 100%; animation: ldHop .62s cubic-bezier(.3,.7,.5,1) infinite alternate; filter: drop-shadow(0 4px 0 rgba(0,0,0,.25)); }
+        .ld-hero i { position: absolute; left: 50%; bottom: -6px; width: 58%; height: 10px; margin-left: -29%; border-radius: 50%; background: rgba(0,0,0,.35); animation: ldShadow .62s cubic-bezier(.3,.7,.5,1) infinite alternate; }
+        @keyframes ldHop { 0% { transform: translateY(0) scale(1.06, .92); } 100% { transform: translateY(-26%) scale(.96, 1.04); } }
+        @keyframes ldShadow { 0% { transform: scale(1); opacity: .5; } 100% { transform: scale(.6); opacity: .25; } }
+        #loading-title { position: absolute; width: 1px; height: 1px; margin: -1px; padding: 0; overflow: hidden; clip: rect(0 0 0 0); border: 0; white-space: nowrap; }
+        .loading-text { font: 900 15px Nunito, system-ui, sans-serif; color: #fff; text-align: center; min-height: 1em; position: relative; z-index: 1;
+            text-shadow: 1.5px 0 0 #0c0530, -1.5px 0 0 #0c0530, 0 1.5px 0 #0c0530, 0 -1.5px 0 #0c0530, 0 3px 0 #0c0530; }
+        .loading-bar { position: relative; z-index: 1; width: min(440px, 80vw); aspect-ratio: 639 / 86;
+            background: url('assets/ui/sp/progress-bar.webp?v=0.1.1-76ec0fbf') 0 50% / 100.16% 248.8% no-repeat; filter: drop-shadow(0 4px 0 rgba(0,0,0,.35)); }
+        .ld-track { position: absolute; left: 1.9%; right: 2.5%; top: 21%; bottom: 17%; background: #160e44; border-radius: 999px; overflow: hidden; box-shadow: inset 0 3px 5px rgba(0,0,0,.6); }
+        .loading-progress { height: 100%; width: 0%; border-radius: 999px; background: linear-gradient(#fff3a0, #ffd000 40%, #f5a800 80%, #d88400); box-shadow: inset 0 3px 0 rgba(255,255,255,.6); transition: width 0.3s ease; }
+        #loading-percent { font: 900 20px Nunito, system-ui, sans-serif; color: #ffe86a; position: relative; z-index: 1;
+            text-shadow: 2px 0 0 #0c0530, -2px 0 0 #0c0530, 0 2px 0 #0c0530, 0 -2px 0 #0c0530, 2px 2px 0 #0c0530, -2px -2px 0 #0c0530, 2px -2px 0 #0c0530, -2px 2px 0 #0c0530, 0 4px 0 #0c0530; }
+        #loading-retry { position: relative; z-index: 1; padding: 12px 28px; border: 4px solid #0c0530; border-radius: 14px; background: linear-gradient(#9af46a, #38cf3a 55%, #17a032); color: #fff; font: 900 18px Nunito, system-ui, sans-serif; cursor: pointer;
+            box-shadow: inset 0 3px 0 rgba(255,255,255,.5), 0 4px 0 rgba(0,0,0,.4); text-shadow: 0 2px 0 #0c0530; }
+        @media (max-height: 460px) { #loading-screen { gap: 1vh; } .ld-logo { width: min(36vw, 42vh * 1.437); } .ld-hero { height: clamp(60px, 22vh, 110px); } .loading-bar { width: min(340px, 60vw); } }
+    </style>
+</head>
+<body>
+    <canvas id="world3d"></canvas>
+    <div id="loading-screen" role="status" aria-busy="true" aria-live="polite">
+        <img class="ld-logo" src="assets/branding/monster-logo.webp" alt="">
+        <h1 id="loading-title">Вор яиц монстров</h1>
+        <div class="ld-hero" aria-hidden="true"><img src="assets/monsters/moxlo.webp" alt=""><i></i></div>
+        <div id="loading-percent">0%</div>
+        <div class="loading-bar" id="loading-meter" role="progressbar" aria-label="Loading" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0"><div class="ld-track"><div class="loading-progress"></div></div></div>
+        <div class="loading-text" data-t="loading">Загрузка…</div>
+        <button id="loading-retry" type="button" hidden></button>
+    </div>
+
+    <!-- Порядок значим: Constants.js первым (остальные читают его глобалы), main.js последним -->
+    <script src="https://games.pikabu.ru/sdk/sdk.js"></script>
+<script src="js/Constants.js?v=0.1.1-76ec0fbf"></script>
+    <script src="libs/simplex-noise.js?v=0.1.1-76ec0fbf"></script>
+    <script src="libs/babylon.js?v=0.1.1-76ec0fbf"></script>
+    <script src="js/Maps.js?v=0.1.1-76ec0fbf"></script>
+    <script src="js/Maps2D.js?v=0.1.1-76ec0fbf"></script>
+    <script src="js/World2D.js?v=0.1.1-76ec0fbf"></script>
+    <script src="js/World3D.js?v=0.1.1-76ec0fbf"></script>
+    <script src="js/Terrain3D.js?v=0.1.1-76ec0fbf"></script>
+    <script src="js/CameraControl.js?v=0.1.1-76ec0fbf"></script>
+    <script src="js/Model3D.js?v=0.1.1-76ec0fbf"></script>
+    <script src="js/ModelFBX.js?v=0.1.1-76ec0fbf"></script>
+    <script src="js/ModelOBJ.js?v=0.1.1-76ec0fbf"></script>
+    <script src="js/ModelGLTF.js?v=0.1.1-76ec0fbf"></script>
+    <script src="js/Location3D.js?v=0.1.1-76ec0fbf"></script>
+    <!-- world-a: Rig.js (риги и клипы), Nav.js (коллизии, высоты, пути) -->
+    <script src="js/Rig.js?v=0.1.1-76ec0fbf"></script>
+    <script src="js/Nav.js?v=0.1.1-76ec0fbf"></script>
+    <!-- 1.30 мир (world-b): уровни графики и время суток -->
+    <script src="js/Quality.js?v=0.1.1-76ec0fbf"></script>
+    <script src="js/Sky3D.js?v=0.1.1-76ec0fbf"></script>
+    <script src="js/Pause.js?v=0.1.1-76ec0fbf"></script>
+    <script src="js/Sound.js?v=0.1.1-76ec0fbf"></script>
+    <script src="js/Lang.js?v=0.1.1-76ec0fbf"></script>
+    <script src="js/Platform.js?v=0.1.1-76ec0fbf"></script>
+    <!-- Адаптеры площадок (Platform.register): Playgama; игра добавляет свои здесь же, после Platform.js -->
+    <script src="js/PlatformPlaygama.js?v=0.1.1-76ec0fbf"></script>
+    <!-- Адаптеры Telegram Mini App, CrazyGames, Android-обёртки и сборки test (detect() выбирает площадку) -->
+    <script src="js/PlatformTelegram.js?v=0.1.1-76ec0fbf"></script>
+    <script src="js/PlatformCrazy.js?v=0.1.1-76ec0fbf"></script>
+    <script src="js/PlatformPikabu.js?v=0.1.1-76ec0fbf"></script>
+    <script src="js/PlatformAndroid.js?v=0.1.1-76ec0fbf"></script>
+    <script src="js/PlatformTest.js?v=0.1.1-76ec0fbf"></script>
+    <script src="js/LoadingScreen.js?v=0.1.1-76ec0fbf"></script>
+    <script src="js/ParticleFX.js?v=0.1.1-76ec0fbf"></script>
+    <script src="js/Telemetry.js?v=0.1.1-76ec0fbf"></script>
+    <!-- 1.30 systems-b: магазин косметики, Daily Gift, колесо фортуны (логика без UI, опт-ин: Shop/DailyGift/Wheel.init в Game.js) -->
+    <script src="js/Shop.js?v=0.1.1-76ec0fbf"></script>
+    <script src="js/DailyGift.js?v=0.1.1-76ec0fbf"></script>
+    <script src="js/Wheel.js?v=0.1.1-76ec0fbf"></script>
+    <!-- 1.30 systems-a: ввод, раскладка HUD, обучение. Opt-in: игра сама зовёт Input.init / HudLayout.init / Tutorial.init -->
+    <script src="js/HudLayout.js?v=0.1.1-76ec0fbf"></script>
+    <script src="js/Input.js?v=0.1.1-76ec0fbf"></script>
+    <script src="js/Tutorial.js?v=0.1.1-76ec0fbf"></script>
+    <script src="js/LiveWater3D.js?v=0.1.1-76ec0fbf"></script>
+    <!-- Скрипты игры (js/Game.js и её модули) — здесь, до main.js -->
+    <script src="js/GameData.js?v=0.1.1-76ec0fbf"></script>
+    <script src="js/GameLang.js?v=0.1.1-76ec0fbf"></script>
+    <script src="js/GameGfx.js?v=0.1.1-76ec0fbf"></script>
+    <script src="js/GameNoob.js?v=0.1.1-76ec0fbf"></script>
+    <script src="js/GameMonsters.js?v=0.1.1-76ec0fbf"></script>
+    <script src="js/GameModels.js?v=0.1.1-76ec0fbf"></script>
+    <script src="js/GameWorld.js?v=0.1.1-76ec0fbf"></script>
+    <script src="js/GameActors.js?v=0.1.1-76ec0fbf"></script>
+    <script src="js/GameUI.js?v=0.1.1-76ec0fbf"></script>
+    <script src="js/GameShopData.js?v=0.1.1-76ec0fbf"></script>
+    <script src="js/GameUIShop.js?v=0.1.1-76ec0fbf"></script>
+    <script src="js/Game.js?v=0.1.1-76ec0fbf"></script>
+    <script src="js/main.js?v=0.1.1-76ec0fbf"></script>
+    <script>
+        // Игровая область: долгий тап и ПКМ не открывают меню браузера, картинки не
+        // тянутся, текст не выделяется — кроме настоящих полей ввода.
+        (() => {
+            const isField = t => t && (/^(INPUT|TEXTAREA|SELECT)$/.test(t.tagName) || t.isContentEditable);
+            for (const type of ['contextmenu', 'dragstart', 'selectstart']) {
+                document.addEventListener(type, e => { if (!isField(e.target)) e.preventDefault(); });
+            }
+        })();
+    </script>
+</body>
+</html>

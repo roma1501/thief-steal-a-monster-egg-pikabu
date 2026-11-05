@@ -1,0 +1,10 @@
+"Silly Sound Effects" by EZduzziteh
+"A Slide Pop Sound" by EZduzziteh
+Asset page: https://opengameart.org/content/silly-sound-effects
+Asset page: https://opengameart.org/content/a-slide-pop-sound
+License: CC0 1.0 Universal (public domain dedication) - https://creativecommons.org/publicdomain/zero/1.0/
+The license was read on the asset page itself (opengameart.org) on 2026-10-23. Attribution is not required.
+
+Downloaded: plup.mp3, bloop.mp3
+Downloaded: slidepop.mp3
+Used in: assets/sounds/monster-hatch.ogg, assets/sounds/pickup-2.ogg, assets/sounds/conveyor-in.ogg, assets/sounds/conveyor-out.ogg

@@ -1,0 +1,7 @@
+"Big scary troll sounds" by Darsycho
+Asset page: https://opengameart.org/content/big-scary-troll-sounds
+License: CC0 1.0 Universal (public domain dedication) - https://creativecommons.org/publicdomain/zero/1.0/
+The license was read on the asset page itself (opengameart.org) on 2026-10-23. Attribution is not required (the author appreciates credit: Darsycho).
+
+Downloaded: troll-roars.ogg (credit appreciated, not required)
+Used in: assets/sounds/guardian-roar.ogg

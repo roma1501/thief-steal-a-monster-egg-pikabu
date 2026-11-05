@@ -1,0 +1,7 @@
+Thief Steal a Monster Egg - original synthesized audio
+
+assets/sounds/band-note.ogg (listed under "sound-monster-synth" in assets/ASSET-SOURCES.json) was generated for this project by a
+numpy/scipy script (modal synthesis). It contains no third-party recordings or samples. No attribution is required.
+
+The layers of new effects that are synthesized in this project (noise sweeps, sine glides, Karplus-Strong strings, convolution reverb)
+are original and are described in the entry of each effect in assets/ASSET-SOURCES.json.

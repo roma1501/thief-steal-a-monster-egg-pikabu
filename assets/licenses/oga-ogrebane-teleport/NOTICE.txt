@@ -1,0 +1,7 @@
+"Teleport Spell" by Ogrebane
+Asset page: https://opengameart.org/content/teleport-spell
+License: CC0 1.0 Universal (public domain dedication) - https://creativecommons.org/publicdomain/zero/1.0/
+The license was read on the asset page itself (opengameart.org) on 2026-10-23. Attribution is not required.
+
+Downloaded: teleport.wav (made for FOSS RPG Summoning Wars)
+Used in: assets/sounds/rebirth.ogg
