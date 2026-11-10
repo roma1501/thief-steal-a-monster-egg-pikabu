@@ -5,7 +5,7 @@
 PikabuShop.setup({
     colors: ['#b14dff', '#ff4fa3'],
     ready: () => !!(typeof Shop !== 'undefined' && Shop.state && Shop.items().length),
-    visible: () => Game.state === 'menu' || Game.state === 'play',
+    visible: () => Game.state === 'menu',   // в забеге справа сверху таймер золотого яйца
     persist: () => Shop._save('pikabu'),
     button: { corner: 'tr', x: 12, y: 74 },
     packs: [
